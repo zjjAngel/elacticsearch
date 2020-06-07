@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/elasticsearch
+		http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
+
+    <!--扫描service包-->
+    <context:component-scan base-package="com.itheima.service"/>
+    <!--扫描持久层包-->
+    <elasticsearch:repositories base-package="com.itheima.dao"/>
+    <!--配置ElasticSearch的服务地址-->
+    <elasticsearch:transport-client id="client" cluster-nodes="127.0.0.1:9300" cluster-name="elasticsearch"/>
+    <!--导入ElasticSearch的模板对象-->
+    <bean class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate" id="elasticsearchTemplate">
+        <constructor-arg ref="client" name="client"/>
+    </bean>
+</beans>
